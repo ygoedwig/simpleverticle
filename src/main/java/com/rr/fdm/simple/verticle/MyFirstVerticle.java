@@ -30,9 +30,10 @@ public class MyFirstVerticle extends AbstractVerticle {
     public void start(Future<Void> fut) {
 
         Router router = Router.router(vertx);
-        router.get("/v1/:id").handler(this::handle);
-        router.get("/v1/:id/run").handler(this::run);
-
+        router.get("/:id").handler(this::handle);
+        router.get("/:id/run").handler(this::run);
+        router.get("/").handler(this::root);
+        System.out.println("Starting to listen on port 8430");
         vertx
                 .createHttpServer()
                 .requestHandler(router::accept)
@@ -45,9 +46,12 @@ public class MyFirstVerticle extends AbstractVerticle {
                 });
     }
 
+    private void root(RoutingContext routingContext) {
+        routingContext.response().end("You have run the simple verticle");
+    }
+
     private void handle(RoutingContext routingContext) {
         String id = routingContext.request().getParam("id");
-
         routingContext.response().end("From Java " + id);
     }
 
