@@ -33,7 +33,7 @@ public class MyFirstVerticle extends AbstractVerticle {
         router.get("/:id").handler(this::handle);
         router.get("/:id/run").handler(this::run);
         router.get("/").handler(this::root);
-        System.out.println("Starting to listen on port 8430 go for it.");
+        System.out.println("Starting to listen on port 8430 go for it, another update.");
         vertx
                 .createHttpServer()
                 .requestHandler(router::accept)
