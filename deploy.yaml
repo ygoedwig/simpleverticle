@@ -1,80 +1,44 @@
-{
-  "kind": "Deployment",
-  "apiVersion": "extensions/v1beta1",
-  "metadata": {
-    "name": "simple",
-    "namespace": "default",
-    "selfLink": "/apis/extensions/v1beta1/namespaces/default/deployments/simple",
-    "uid": "c66f0151-b56a-11e7-a382-000d3a19cccd",
-    "resourceVersion": "1557881",
-    "generation": 1,
-    "creationTimestamp": "2017-10-20T07:46:25Z",
-    "labels": {
-      "app": "simple"
-    },
-    "annotations": {
-      "deployment.kubernetes.io/revision": "1"
-    }
-  },
-  "spec": {
-    "replicas": 1,
-    "selector": {
-      "matchLabels": {
-        "app": "simple"
-      }
-    },
-    "template": {
-      "metadata": {
-        "name": "simple",
-        "creationTimestamp": null,
-        "labels": {
-          "app": "simple"
-        }
-      },
-      "spec": {
-        "containers": [
-          {
-            "name": "simple",
-            "image": "ygoedwig/simple2",
-            "resources": {},
-            "terminationMessagePath": "/dev/termination-log",
-            "terminationMessagePolicy": "File",
-            "imagePullPolicy": "Always",
-            "securityContext": {
-              "privileged": false
-            }
-          }
-        ],
-        "restartPolicy": "Always",
-        "terminationGracePeriodSeconds": 30,
-        "dnsPolicy": "ClusterFirst",
-        "securityContext": {},
-        "schedulerName": "default-scheduler"
-      }
-    },
-    "strategy": {
-      "type": "RollingUpdate",
-      "rollingUpdate": {
-        "maxUnavailable": 1,
-        "maxSurge": 1
-      }
-    }
-  },
-  "status": {
-    "observedGeneration": 1,
-    "replicas": 1,
-    "updatedReplicas": 1,
-    "readyReplicas": 1,
-    "availableReplicas": 1,
-    "conditions": [
-      {
-        "type": "Available",
-        "status": "True",
-        "lastUpdateTime": "2017-10-20T07:46:25Z",
-        "lastTransitionTime": "2017-10-20T07:46:25Z",
-        "reason": "MinimumReplicasAvailable",
-        "message": "Deployment has minimum availability."
-      }
-    ]
-  }
-}
+apiVersion: apps/v1beta1 # for versions before 1.8.0 use apps/v1beta1
+kind: Deployment
+metadata:
+  name: accounts-service
+  labels:
+    app: accounts
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: accounts
+  template:
+    metadata:
+      labels:
+        app: accounts
+    spec:
+      containers:
+      - name: accounts
+        image: ygoedwig/simple2
+        ports:
+        - containerPort: 8430
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: accounts
+  labels:
+    app: accounts
+spec:
+  ports:
+    - port: 80
+      targetPort: 8430
+      name: accounts
+      protocol: TCP
+  selector:
+    app: accounts
+  type: LoadBalancer
+
+  #52.168.148.186
+  #13.72.77.1
+  #52.168.93.89
+  #13.72.75.39
+  #52.170.211.78
+  
