@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: accounts
-        image: ygoedwig/simple2
+        image: fdmcontainer/ygoedwig/simpleverticle:$BUILD_ID
         ports:
         - containerPort: 8430
 ---
@@ -41,4 +41,3 @@ spec:
   #52.168.93.89
   #13.72.75.39
   #52.170.211.78
-  
