@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: accounts
-        image: fdmcontainer/ygoedwig/simpleverticle
+        image: fdmcontainer.azurecr.io/ygoedwig/simpleverticle:BUILD_ID
         ports:
         - containerPort: 8430
 ---
